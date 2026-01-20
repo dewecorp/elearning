@@ -4,8 +4,8 @@ include "koneksi.php";
 require_once 'sweetalert_helper.php';
 
 
-// Proses form submit
-if(isset($_POST['simpan'])) {
+// Proses form submit untuk pengaturan sekolah
+if(isset($_POST['simpan']) && !isset($_POST['backup_db'])) {
     $nama_sekolah = mysqli_real_escape_string($db, $_POST['nama_sekolah']);
     $alamat_sekolah = mysqli_real_escape_string($db, $_POST['alamat_sekolah']);
     $telp_sekolah = mysqli_real_escape_string($db, $_POST['telp_sekolah']);
@@ -38,13 +38,13 @@ if(isset($_POST['simpan'])) {
         if(!empty($logo_sekolah)) {
             $updateQuery = mysqli_query($db, "UPDATE tb_pengaturan SET 
                 nama_sekolah = '$nama_sekolah', 
-                alamat_sekolah = '$alamat_sekolah', 
+                alamat = '$alamat_sekolah', 
                 telp_sekolah = '$telp_sekolah', 
                 email_sekolah = '$email_sekolah', 
                 tahun_ajaran = '$tahun_ajaran', 
-                logo_sekolah = '$logo_sekolah', 
-                nama_kepala_sekolah = '$nama_kepala', 
-                nip_kepala = '$nip_kepala' 
+                logo = '$logo_sekolah', 
+                kepala_sekolah = '$nama_kepala', 
+                nip_kepsek = '$nip_kepala' 
                 WHERE id_pengaturan = 1");
                 
             if($updateQuery) {
@@ -55,12 +55,12 @@ if(isset($_POST['simpan'])) {
         } else {
             $updateQuery = mysqli_query($db, "UPDATE tb_pengaturan SET 
                 nama_sekolah = '$nama_sekolah', 
-                alamat_sekolah = '$alamat_sekolah', 
+                alamat = '$alamat_sekolah', 
                 telp_sekolah = '$telp_sekolah', 
                 email_sekolah = '$email_sekolah', 
                 tahun_ajaran = '$tahun_ajaran', 
-                nama_kepala_sekolah = '$nama_kepala', 
-                nip_kepala = '$nip_kepala' 
+                kepala_sekolah = '$nama_kepala', 
+                nip_kepsek = '$nip_kepala' 
                 WHERE id_pengaturan = 1");
                 
             if($updateQuery) {
@@ -73,13 +73,13 @@ if(isset($_POST['simpan'])) {
         // Insert
         $insertQuery = mysqli_query($db, "INSERT INTO tb_pengaturan SET 
             nama_sekolah = '$nama_sekolah', 
-            alamat_sekolah = '$alamat_sekolah', 
+            alamat = '$alamat_sekolah', 
             telp_sekolah = '$telp_sekolah', 
             email_sekolah = '$email_sekolah', 
             tahun_ajaran = '$tahun_ajaran', 
-            logo_sekolah = '$logo_sekolah', 
-            nama_kepala_sekolah = '$nama_kepala', 
-            nip_kepala = '$nip_kepala'");
+            logo = '$logo_sekolah', 
+            kepala_sekolah = '$nama_kepala', 
+            nip_kepsek = '$nip_kepala'");
             
         if($insertQuery) {
             echo "<script>autoSuccess('Pengaturan sekolah berhasil disimpan!'); setTimeout(function(){ window.location='?page=pengaturan'; }, 1500);</script>";
@@ -121,7 +121,7 @@ if(mysqli_num_rows($sql) > 0) {
                             
                             <div class="form-group">
                                 <label>Alamat Sekolah *</label>
-                                <textarea name="alamat_sekolah" class="form-control" rows="3" required><?php echo $pengaturan['alamat_sekolah'] ?? ''; ?></textarea>
+                                <textarea name="alamat_sekolah" class="form-control" rows="3" required><?php echo $pengaturan['alamat'] ?? ''; ?></textarea>
                             </div>
                             
                             <div class="form-group">
@@ -148,13 +148,13 @@ if(mysqli_num_rows($sql) > 0) {
                             <div class="form-group">
                                 <label>Nama Kepala Sekolah</label>
                                 <input type="text" name="nama_kepala" class="form-control" 
-                                       value="<?php echo $pengaturan['nama_kepala_sekolah'] ?? ''; ?>">
+                                       value="<?php echo $pengaturan['kepala_sekolah'] ?? ''; ?>">
                             </div>
                             
                             <div class="form-group">
                                 <label>NIP Kepala Sekolah</label>
                                 <input type="text" name="nip_kepala" class="form-control" 
-                                       value="<?php echo $pengaturan['nip_kepala'] ?? ''; ?>">
+                                       value="<?php echo $pengaturan['nip_kepsek'] ?? ''; ?>">
                             </div>
                             
                             <div class="form-group">
@@ -162,12 +162,12 @@ if(mysqli_num_rows($sql) > 0) {
                                 <input type="file" name="logo_sekolah" class="form-control" accept="image/*">
                                 <small class="text-muted">Format: JPG, PNG, GIF. Max 2MB</small>
                                 
-                                <?php if(!empty($pengaturan['logo_sekolah'])): ?>
+                                <?php if(!empty($pengaturan['logo'])): ?>
                                 <div style="margin-top: 10px;">
-                                    <img src="../style/assets/img/<?php echo $pengaturan['logo_sekolah']; ?>" 
+                                    <img src="../style/assets/img/<?php echo $pengaturan['logo']; ?>" 
                                          style="max-width: 150px; max-height: 100px; border: 1px solid #ddd; padding: 5px;">
                                     <br>
-                                    <small>Logo saat ini: <?php echo $pengaturan['logo_sekolah']; ?></small>
+                                    <small>Logo saat ini: <?php echo $pengaturan['logo']; ?></small>
                                 </div>
                                 <?php endif; ?>
                             </div>
@@ -212,3 +212,4 @@ if(mysqli_num_rows($sql) > 0) {
         </div>
     </div>
 </div>
+

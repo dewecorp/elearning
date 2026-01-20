@@ -27,7 +27,8 @@ $page_titles = [
     'materi' => 'Manajemen Materi',
     'quiz' => 'Manajemen Tugas/Quiz',
     'berita' => 'Manajemen Berita',
-    'pengaturan' => 'Pengaturan'
+    'pengaturan' => 'Pengaturan',
+    'backup' => 'Backup & Restore Database'
 ];
 
 // Handle special cases with sub-actions
@@ -517,6 +518,13 @@ if($current_page == 'quiz' && isset($_GET['action'])) {
                 </a>
             </div>
 
+            <div class="nav-item">
+                <a href="?page=backup" class="nav-link <?php if(@$_GET['page'] == 'backup') echo 'active'; ?>">
+                    <i class="fas fa-database"></i>
+                    <span>Backup & Restore</span>
+                </a>
+            </div>
+
             <div class="nav-divider"></div>
 
             <div class="nav-item">
@@ -608,6 +616,8 @@ if($current_page == 'quiz' && isset($_GET['action'])) {
                 include "inc/berita_modal.php";
             } else if(@$_GET['page'] == 'pengaturan') {
                 include "inc/pengaturan_sweet.php";
+            } else if(@$_GET['page'] == 'backup') {
+                include "inc/backup_restore.php";
             } else {
                 echo '<div class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> Halaman tidak ditemukan!</div>';
             }
