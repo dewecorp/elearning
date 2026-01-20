@@ -218,7 +218,7 @@ function formatBytes($size, $precision = 2) {
                             $no = 1;
                             // Pastikan koneksi database tersedia
                             if(!isset($db)) {
-                                include "koneksi.php";
+                                include dirname(__DIR__) . "/koneksi.php";
                             }
                             $sql_backup = mysqli_query($db, "SELECT * FROM tb_backup ORDER BY tanggal_backup DESC");
                             if(mysqli_num_rows($sql_backup) > 0) {
